@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Custom styles */
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .btn {
+      width: 80px;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- React and ReactDOM -->
+  <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+  <!-- Babel Standalone -->
+  <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+  <script type="text/babel">
+    function Calculator() {
+      const [num1, setNum1] = React.useState('');
+      const [num2, setNum2] = React.useState('');
+      const [result, setResult] = React.useState('');
+
+      const handleNum1Change = (e) => {
+        setNum1(e.target.value);
+      };
+
+      const handleNum2Change = (e) => {
+        setNum2(e.target.value);
+      };
+
+      const handleAddition = () => {
+        setResult(parseFloat(num1) + parseFloat(num2));
+      };
+
+      const handleSubtraction = () => {
+        setResult(parseFloat(num1) - parseFloat(num2));
+      };
+
+      const handleMultiplication = () => {
+        setResult(parseFloat(num1) * parseFloat(num2));
+      };
+
+      const handleDivision = () => {
+        if (parseFloat(num2) === 0) {
+          setResult('Cannot divide by zero');
+        } else {
+          setResult(parseFloat(num1) / parseFloat(num2));
+        }
+      };
+
+      return (
+        <div className="container mt-4">
+          <h2 className="text-center mb-4">Calculator</h2>
+          <div className="mb-3">
+            <label htmlFor="num1" className="form-label">Number 1:</label>
+            <input type="number" className="form-control" id="num1" value={num1} onChange={handleNum1Change} />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="num2" className="form-label">Number 2:</label>
+            <input type="number" className="form-control" id="num2" value={num2} onChange={handleNum2Change} />
+          </div>
+          <div className="mb-3 d-flex justify-content-center">
+            <button className="btn btn-primary me-2" onClick={handleAddition}>Add</button>
+            <button className="btn btn-primary me-2" onClick={handleSubtraction}>Subtract</button>
+            <button className="btn btn-primary me-2" onClick={handleMultiplication}>Multiply</button>
+            <button className="btn btn-primary" onClick={handleDivision}>Divide</button>
+          </div>
+          {result !== '' && (
+            <div className="alert alert-success text-center" role="alert">
+              Result: {result}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.render(<Calculator />, document.getElementById('root'));
+  </script>
+</body>
+</html>
